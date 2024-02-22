@@ -1,0 +1,98 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+:root{
+    --color-header:#D5D4D4;
+    --color-box-menu:#C3BFBF;
+    --color-menu-lateral:#D9D9D9;
+    --color-main-sec:#F4F3F3;
+    --shadow-box: 2px 2px 5px rgba(0, 0, 0, 0.39);
+    --shadow-text:1px 1px 3px rgba(0,0,0,0.538);
+    --shadow-active:1px 1px 3px rgba(255, 255, 255, 0.607);
+    --shadow-hover:1px 1px 3px rgba(0, 0, 0, 0.739);
+    --shadow-profundidade: inset 1px 1px 2px rgba(0, 0, 0, 0.171);
+
+}
+body{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height:  40px;
+    background-color: var(--color-header);
+    box-shadow: var(--shadow-box);
+    flex-direction: row-reverse;
+    
+}
+#btnMenu{
+    margin: 10px 40px 10px 0px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform .3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center ;
+    background-color: var(--color-box-menu);
+    border: none;
+    box-shadow: var(--shadow-box);
+    border-radius: 3px;
+    
+}
+#btnMenu:hover{
+    box-shadow: var(--shadow-hover);
+}
+#btnMenu:active{
+    box-shadow: var(--shadow-active);
+}
+.traco{
+    background-color: white;
+    width: 80%;
+    height: 4px;
+    border-radius: 7px;
+    margin:1.5px ;
+    box-shadow: var(--shadow-profundidade);
+
+}
+#listaMenu{
+    display: flex;
+    flex-direction: row;
+    margin-left: 40px;
+    width: auto;
+}
+.itemMenu a{
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    text-shadow: var(--shadow-text);
+    font-size: 18px;
+}
+.itemMenu a:hover{
+    text-shadow: var(--shadow-hover);
+}
+.itemMenu a:active{
+    text-shadow: var(--shadow-selecao);
+}
+#telaPrincipal{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 100%;
+
+}
+.mainSec{
+    margin: 1%;
+    width:100%;
+    height: auto;
+    background-color:var(--color-main-sec) ;
+}
