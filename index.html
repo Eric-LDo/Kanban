@@ -4,25 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="src/main.js" defer></script>
+    <script type="module" src="src/Main.js" defer></script>
+    
+    
+    
     <title>Kanban</title>
 </head>
-<body>
+<body id="corpoPag">
+    <div id="janelaTarefa">
+        <div class="janela">
+            <div class="jaHeader">
+                    <div></div>
+                    <h2>Crie sua nova tarefa aqui</h2>
+                    <button id="fechar">
+                        <strong>&#10005;</strong>
+                        
+                    </button>
+            </div>
+            <form action="src/Main.js" class="containerJanela">
+                    <label for="tNome" id="tNome">Nome da Tarefa: 
+                        <input type="text"  required>
+                    </label>
+                    <label for="descricao" id="tDescricao"><textarea placeholder="Adicionar descrição..." id="" cols="" rows="10"></textarea></label><br/>
+                    <label for="etapa" id="tEtapa">
+                        Adicionar uma etapa: <input type="text" >
+                    </label>
+                        
+                    <label for="etapas">
+                        <div id="tetapas">
+                            <ul type="none" id="listaEtapas">
+
+                            </ul>
+                        </div>
+                    </label>
+                    <label for="tSalve"><input type="button" id="criarTarefa" value="Salvar Tarefa"></label>
+            </form>
+            
+        </div>
+    </div>
     <header>
-        <button id="btnMenu" onclick="menuLateral()">
+        <button id="btnMenu">
             <div class="traco"></div>
             <div class="traco"></div>
             <div class="traco"></div>
         </button>
         <nav id="menuPrinc">
             <ul id="listaMenu" type="none">
-                <li class="itemMenu"><a href="#">Nova tarefa</a></li>
+                <li class="itemMenu"><a href="#" id="novaTarefa">Nova tarefa</a></li>
                 <li class="itemMenu"><a href="#">Tarefas Diárias</a></li>
             </ul>
         </nav>
     </header>
-    <main id="telaPrincipal">
-        
+    <main id="telaPrincipal">        
         <section class="mainSec" id="aFazer">
 
         </section>
