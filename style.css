@@ -9,17 +9,20 @@
     --color-box-menu:#C3BFBF;
     --color-menu-lateral:#D9D9D9;
     --color-main-sec:#F4F3F3;
+    --color-postit-amarelo:#FAE423;
     --shadow-box: 2px 2px 5px rgba(0, 0, 0, 0.39);
     --shadow-text:2px 2px 4px rgba(0, 0, 0, 0.895);
     --shadow-active:1px 1px 3px rgba(255, 255, 255, 0.607);
     --shadow-hover:1px 1px 3px rgba(0, 0, 0, 0.739);
     --shadow-profundidade: inset 1px 1px 2px rgba(0, 0, 0, 0.171);
+
 }
 body{
     display: flex;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    overflow:hidden;
 }
 header{
     display: flex;
@@ -87,7 +90,7 @@ header{
     display: flex;
     justify-content: center;
     flex-direction: row;
-    height: 100%;
+    height: 90vh;
 
 }
 .mainSec{
@@ -95,6 +98,9 @@ header{
     width:100%;
     height: auto;
     background-color:var(--color-main-sec) ;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
 }
 #menuLateral{    
     background-color: var(--color-menu-lateral);
@@ -116,7 +122,7 @@ header{
 }
 .janela{
     width: 70%;
-    height: 70%;
+    height: auto;
     background-color: white;
     box-shadow: var(--shadow-box);
     display: flex;
@@ -132,10 +138,11 @@ header{
     justify-content: space-between;
     flex: 1;
     margin:10px;
+    font-size:100%;
 }
 
 #fechar{
-    margin-right:20px ;
+    margin:5px 20px 0px 0px ;
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -156,12 +163,16 @@ header{
     margin-top:10px
 }
 #tNome, #tEtapa{
-    width: 80%;
+    width: 100%;
     display: flex;
-    justify-content:start;
+    
 }
-#tNome input,#tEtapa input{
-    width:100% ;
+#tNome input {
+    width: 75%;
+    
+}
+#tEtapa input{
+    width: 50%;
 }
 #tDescricao{
     width: 100%;
@@ -171,6 +182,76 @@ header{
     padding: 10px;
     margin-top: 20px;
 }
+#tAdicionar{
+    border-radius:0px 5px 5px 0px;
+}
+#tetapas{
+    min-height:30px ;
+}
+.mainSec h2{
+    margin: 10px;
+}
+.mainSec2{
+    width:  96% !important;
+    height: 90%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    
 
+}
+.mainSec2::-webkit-scrollbar-thumb {
+    background-color: #FAE423;
+    border-radius: 5px;
+  }
+
+.postits{
+    width:150px;
+    height:150px;
+    background-color:var(--color-postit-amarelo) ;
+    box-shadow:var(--shadow-box);
+    display:inline-flex;
+    flex-direction: column;
+    align-items:start;
+    justify-content:start;
+    font-size:14px ;
+    margin: 10px;
+    white-space: wrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    
+}
+#botaoPostits{
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    z-index: 3;
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+}
+#botaoPostits button{
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: #F4F3F3;
+}
+.postits h2
+, .postits p{
+    font-size: 100%;
+    margin: 5px;
+}
+#drop li{
+    height: 20px;
+    justify-self:start ;
+    text-shadow: var(--shadow-text);
+}
+#drop li:hover{
+    text-shadow: var(--shadow-hover);
+}
+#drop{
+    margin: 0px;
+}
 
 

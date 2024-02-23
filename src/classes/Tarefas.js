@@ -1,4 +1,4 @@
-export class Tarefas{
+class Tarefas{
     _titulo
     _descricao
     _etapas
@@ -10,7 +10,7 @@ export class Tarefas{
         this._status = status;
     }
     get titulo(){
-        return this.titulo
+        return this._titulo
     }
     set titulo(titulo) {
         if(typeof titulo == "string"){
