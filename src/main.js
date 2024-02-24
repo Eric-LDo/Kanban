@@ -50,6 +50,10 @@ function menuLateral(){
 novaTarefa.addEventListener('click', newTarefa );
 
 function newTarefa(){
+    divJanelaTarefa()  
+} 
+function divJanelaTarefa(tarefa){
+    
     const divJanelaTarefa = document.createElement("div");
     divJanelaTarefa.id = "janelaTarefa";
 
@@ -128,7 +132,7 @@ function newTarefa(){
     buttonCriarTarefa.type = "button";
     buttonCriarTarefa.value ="Criar Tarefa";
     buttonCriarTarefa.id = "criarTarefa";
-    buttonCriarTarefa.textContent = "Salvar Tarefa";
+    
 
     labelSalvarTarefa.appendChild(buttonCriarTarefa);
     divJaHeader.appendChild(divVasia);
@@ -148,10 +152,23 @@ function newTarefa(){
     divJanelaTarefa.appendChild(divJanela);
 
     document.body.prepend(divJanelaTarefa);
-
+    
     buttonFechar.addEventListener("click", () => { 
         divJanelaTarefa.remove();
     });
+
+    ////////////////////////////////////////////////////////////
+    //movimentações
+    if(tarefa !== undefined){
+        inputNomeTarefa.value = tarefa._titulo;
+        textareaDescricao.value = tarefa._descricao;
+        
+        for(let i = 0; i < tarefa._etapas.length; i++){
+            ulEtapas.innerHTML+= tarefa._etapas[i].outerHTML
+        }
+        buttonCriarTarefa.value = "Modificar Tarefa";
+    }  
+
     buttonAdicionarEtapa.addEventListener("click", () =>{
         if(!inputEtapa.value.length == 0){
             let li =  document.createElement('li');
@@ -169,82 +186,109 @@ function newTarefa(){
 
             ulEtapas.appendChild(li)
         } 
-    });
+    }); 
     buttonCriarTarefa.addEventListener('click', (e)=>{
-            
-            let tarefa = new Tarefas(inputNomeTarefa.value,textareaDescricao.value,ulEtapas.childNodes, A_FAZER);
-            divJanelaTarefa.remove();
-            tarefasAF.push(tarefa)
-            atualizarListaDeTarefasAFazer()
-    })
-} 
+    if(tarefa !== undefined){
+        tarefa._titulo =inputNomeTarefa.value
+        tarefa._descricao = textareaDescricao.value
+        tarefa._etapas = ulEtapas.childNodes
+    }else{
+        tarefa = new Tarefas(inputNomeTarefa.value,textareaDescricao.value,ulEtapas.childNodes, A_FAZER);
+        tarefasAF.push(tarefa)}
+        
+        const aFazerBox = document.querySelector('#aFazer .mainSec2')
+        criarPostit(aFazerBox,  tarefasAF, ['Editar', 'Excluir', 'Feito', 'Em andamento'])
+        divJanelaTarefa.remove();
+    })  
+}
 
-function atualizarListaDeTarefasAFazer(){
-    
-    
-    const aFazerBox = document.querySelector('#aFazer .mainSec2')
-    aFazerBox.innerHTML=""
-    
-    for(let i = 0; i < tarefasAF.length ;i++){
+function atualizarListaDeTarefasC(c){
+    const concluidosBox = document.querySelector('#concluidos .mainSec2')
+    concluidosBox.innerHTML=""
+    for(let i = 0; i < tarefasC.length ;i++){
+        criarPostit(concluidosBox, i, c)  
+    }
+}
+
+function criarPostit(caixa, vetorTarefa, opcoesVetor ){
+    caixa.innerHTML=""
+    for(let i = 0; i < vetorTarefa.length ;i++){
+        const editar=[]
         const postit =  document.createElement( 'div');
         postit.setAttribute('class', 'postits afazer')
         const  titulo = document.createElement ('h2');
-        titulo.textContent = `${tarefasAF[i].titulo}`;
+        titulo.textContent = `${vetorTarefa[i]._titulo}`;
         const descricao = document.createElement('p');
-        descricao.textContent=`${tarefasAF[i].descricao}`
+        descricao.textContent=`${vetorTarefa[i]._descricao}`
         postit.appendChild(titulo)
         postit.appendChild(descricao)     
-        aFazerBox.appendChild(postit)
-        mineMenu()
-        function mineMenu(){
-            var divPrincipal = document.createElement('div');
-            divPrincipal.classList.add('btn-group');
-            divPrincipal.setAttribute('role', 'group');
-            divPrincipal.setAttribute('id', 'drop1')
-            
-            divPrincipal.setAttribute('aria-label', 'Button group with nested dropdown');
-
-            var divInterna = document.createElement('div');
-            divInterna.classList.add('btn-group');
-            divInterna.setAttribute('role', 'group');
-            
-            
-            var botaoDropdown = document.createElement('button');
-            botaoDropdown.setAttribute('type', 'button');
-            botaoDropdown.classList.add('btn', 'btn-primary', 'dropdown-toggle');
-            botaoDropdown.setAttribute('data-bs-toggle', 'dropdown');
-            botaoDropdown.setAttribute('aria-expanded', 'false');
-            var ulDropdown = document.createElement('ul');
-            ulDropdown.classList.add('dropdown-menu');
-            ulDropdown.setAttribute('id','drop')
+        caixa.appendChild(postit)
         
-            var opcoesDropdown = ['Editar', 'Excluir', 'Feito', 'Em andamento'];
+        mineMenu(opcoesVetor, postit, 'mineMAFazer')//Criar o menu da tarefa
+        //Adicionando os eventos nos itens do menu
+        for (var j = 0; j < opcoesVetor.length; j++){
+            editar[j] =  postit.querySelector(`#mineMAFazer${j}`);
 
-            for (var i = 0; i < opcoesDropdown.length; i++) {
-                var li = document.createElement('li');
-                var a = document.createElement('a');
-                a.classList.add('dropdown-item');
-                a.setAttribute('href', '#');
-                a.textContent = opcoesDropdown[i];
-                li.appendChild(a);
-                ulDropdown.appendChild(li);
-            }
-
-            // Montagem da estrutura
-            botaoDropdown.textContent = ' '; // Adiciona um espaço ao botão para evitar que ele fique muito pequeno
-            divInterna.appendChild(botaoDropdown);
-            divInterna.appendChild(ulDropdown);
-            divPrincipal.appendChild(divInterna);
-
-            // Adiciona a div ao corpo do documento
-            postit.prepend(divPrincipal);
-            console.log('entrou')  
         }
-              
-            
-        
-        
-
-
+        editar[0].addEventListener('click', ()=>{
+            divJanelaTarefa(vetorTarefa[i])
+        });
+        editar[1].addEventListener('click', ()=>{
+            postit.remove()
+            vetorTarefa.splice(i)
+        });
+        editar[2].addEventListener('click', ()=>{
+            tarefasC.push(vetorTarefa[i]);
+            postit.remove()
+            vetorTarefa.splice(i)
+            atualizarListaDeTarefasC(tarefasC)
+        });
     }
+}
+
+//função de criação do menu que vai nos postitis
+function mineMenu(opcoes, caixa, id){
+
+        var divPrincipal = document.createElement('div');
+        divPrincipal.classList.add('btn-group');
+        divPrincipal.setAttribute('role', 'group');
+        divPrincipal.setAttribute('id', 'drop1')
+        divPrincipal.setAttribute('aria-label', 'Button group with nested dropdown');
+
+        var divInterna = document.createElement('div');
+        divInterna.classList.add('btn-group');
+        divInterna.setAttribute('role', 'group');
+        
+        
+        var botaoDropdown = document.createElement('button');
+        botaoDropdown.setAttribute('type', 'button');
+        botaoDropdown.classList.add('btn', 'btn-primary', 'dropdown-toggle');
+        botaoDropdown.setAttribute('data-bs-toggle', 'dropdown');
+        botaoDropdown.setAttribute('aria-expanded', 'false');
+
+        var ulDropdown = document.createElement('ul');
+        ulDropdown.classList.add('dropdown-menu');
+        ulDropdown.setAttribute('id','drop')
+    
+        for (var i = 0; i < opcoes.length; i++) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.classList.add('dropdown-item');
+            a.setAttribute('href', '#');
+            a.textContent = opcoes[i];
+            li.appendChild(a);
+            li.setAttribute('id',`${id}${i}`)
+            ulDropdown.appendChild(li);
+            
+        }
+
+        // Montagem da estrutura
+        botaoDropdown.textContent = ' '; // Adiciona um espaço ao botão para evitar que ele fique muito pequeno
+        divInterna.appendChild(botaoDropdown);
+        divInterna.appendChild(ulDropdown);
+        divPrincipal.appendChild(divInterna);
+
+        // Adiciona a div ao corpo do documento
+        caixa.prepend(divPrincipal);
+        
 }
