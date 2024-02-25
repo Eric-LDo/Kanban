@@ -3,13 +3,15 @@ const concluidos = document.querySelector('#concluidos')
 const body =  document.querySelector('#corpoPag');
 const btn = document.querySelector('#btnMenu')
 const novaTarefa = document.querySelector('#novaTarefa')
-const A_FAZER = "A fazer"
-const  CONCLUIDO = "Concluído"
-const EM_REALIZACAO = "Em realização"
+const A_FAZER = "Afazer"
+const CONCLUIDO = "Concluido"
+const EM_REALIZACAO = "EmRealizacao"
 const  tarefas = []
 const tarefasAF= []
 const tarefasC = []
-const tarefasER = {}
+const tarefasEA =[]
+let contenMenu = false
+
 btn.addEventListener( 'click', menuLateral)
 body.addEventListener('keydown'  , function (e){
     if(e.key == 'Escape'){
@@ -18,7 +20,7 @@ body.addEventListener('keydown'  , function (e){
 });
 
 
-let contenMenu = false
+
 
 function menuLateral(){
     if (!contenMenu){
@@ -195,27 +197,16 @@ function divJanelaTarefa(tarefa){
     }else{
         tarefa = new Tarefas(inputNomeTarefa.value,textareaDescricao.value,ulEtapas.childNodes, A_FAZER);
         tarefasAF.push(tarefa)}
-        
-        const aFazerBox = document.querySelector('#aFazer .mainSec2')
-        criarPostit(aFazerBox,  tarefasAF, ['Editar', 'Excluir', 'Feito', 'Em andamento'])
+        criarPostit(document.querySelector('#aFazer .mainSec2'),  tarefasAF, ['Editar', 'Excluir', 'Concluído', 'Em andamento'],A_FAZER)
         divJanelaTarefa.remove();
     })  
 }
-
-function atualizarListaDeTarefasC(c){
-    const concluidosBox = document.querySelector('#concluidos .mainSec2')
-    concluidosBox.innerHTML=""
-    for(let i = 0; i < tarefasC.length ;i++){
-        criarPostit(concluidosBox, i, c)  
-    }
-}
-
-function criarPostit(caixa, vetorTarefa, opcoesVetor ){
+function criarPostit(caixa, vetorTarefa, opcoesVetor,id ){
     caixa.innerHTML=""
     for(let i = 0; i < vetorTarefa.length ;i++){
         const editar=[]
         const postit =  document.createElement( 'div');
-        postit.setAttribute('class', 'postits afazer')
+        postit.setAttribute('class', `postits ${id}` )
         const  titulo = document.createElement ('h2');
         titulo.textContent = `${vetorTarefa[i]._titulo}`;
         const descricao = document.createElement('p');
@@ -224,25 +215,73 @@ function criarPostit(caixa, vetorTarefa, opcoesVetor ){
         postit.appendChild(descricao)     
         caixa.appendChild(postit)
         
-        mineMenu(opcoesVetor, postit, 'mineMAFazer')//Criar o menu da tarefa
+        mineMenu(opcoesVetor, postit, id)//Criar o menu da tarefa
         //Adicionando os eventos nos itens do menu
         for (var j = 0; j < opcoesVetor.length; j++){
-            editar[j] =  postit.querySelector(`#mineMAFazer${j}`);
-
+            editar[j] =  postit.querySelector(`#${id}${j}`);
         }
+        if(id == A_FAZER){
+            //editar afazer
         editar[0].addEventListener('click', ()=>{
             divJanelaTarefa(vetorTarefa[i])
         });
+            //Excluir
         editar[1].addEventListener('click', ()=>{
             postit.remove()
-            vetorTarefa.splice(i)
+            vetorTarefa.drop(i)//ta retornando conforme mexe no programa
         });
+            //enviar par concluido
         editar[2].addEventListener('click', ()=>{
+            
             tarefasC.push(vetorTarefa[i]);
             postit.remove()
-            vetorTarefa.splice(i)
-            atualizarListaDeTarefasC(tarefasC)
+            criarPostit(document.querySelector('#concluidos .mainSec2'),tarefasC,['Excluir'],CONCLUIDO);
+            vetorTarefa.drop(i)
+            
         });
+            //enviar para em andamento
+        editar[3].addEventListener('click', ()=>{
+            if(tarefasEA.length== 0){
+            tarefasEA.push(vetorTarefa[i]);
+            postit.remove();
+            criarPostit(document.querySelector('#emAndamento .mainSec2'),tarefasEA,['Editar','Excluir','Concluido','A fazer'], EM_REALIZACAO);
+            vetorTarefa.drop(i)
+             
+            }else{
+                let espera  = document.createElement('p')
+                espera.setAttribute('style','color:red')
+                espera.className='espera'
+                espera.textContent= `Esperando a realização de outra tarefa`
+                postit.appendChild(espera)
+            }
+        });
+        }else if(id == EM_REALIZACAO){
+            editar[0].addEventListener('click', ()=>{
+                divJanelaTarefa(vetorTarefa[i])
+            });
+            editar[1].addEventListener('click', ()=>{
+                postit.remove()
+                vetorTarefa.drop(i)
+            });
+            editar[2].addEventListener('click', ()=>{
+                tarefasC.push(vetorTarefa[i]);
+                postit.remove();
+                criarPostit(document.querySelector('#concluidos .mainSec2'),tarefasC,['Excluir'],CONCLUIDO);
+                vetorTarefa.drop(i)
+            });
+            editar[3].addEventListener('click', ()=>{
+                tarefasAF.push(vetorTarefa[i]);
+                postit.remove();
+                criarPostit(document.querySelector('#aFazer .mainSec2'),  tarefasAF, ['Editar', 'Excluir', 'Concluído', 'Em andamento'],A_FAZER)
+                vetorTarefa.drop(i)
+            });
+        }else if(id == CONCLUIDO){
+            editar[0].addEventListener('click', ()=>{
+                postit.remove()
+                vetorTarefa.drop(i)
+            });
+        }
+
     }
 }
 

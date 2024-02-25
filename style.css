@@ -5,17 +5,18 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 :root{
-    --color-header:#D5D4D4;
-    --color-box-menu:#C3BFBF;
-    --color-menu-lateral:#D9D9D9;
+    --color-header:#049df5;
+    --color-box-menu:#9ce8f4;
+    --color-menu-lateral:#8ebbef;
     --color-main-sec:#F4F3F3;
     --color-postit-amarelo:#FAE423;
+    --color-postit-verde:#E9FFDF;
+    --color-postit-vermelho:#FC9C9C;
     --shadow-box: 2px 2px 5px rgba(0, 0, 0, 0.39);
     --shadow-text:2px 2px 4px rgba(0, 0, 0, 0.895);
     --shadow-active:1px 1px 3px rgba(255, 255, 255, 0.607);
     --shadow-hover:1px 1px 3px rgba(0, 0, 0, 0.739);
     --shadow-profundidade: inset 1px 1px 2px rgba(0, 0, 0, 0.171);
-
 }
 body{
     display: flex;
@@ -208,18 +209,12 @@ header{
     height: 90%;
     overflow-y: auto;
     scrollbar-width: thin;
-    
-
 }
-.mainSec2::-webkit-scrollbar-thumb {
-    background-color: #FAE423;
-    border-radius: 5px;
-  }
+
 
 .postits{
     width:150px;
     height:150px;
-    background-color:var(--color-postit-amarelo) ;
     box-shadow:var(--shadow-box);
     display:inline-flex;
     flex-direction: column;
@@ -228,10 +223,40 @@ header{
     font-size:14px ;
     margin: 10px;
     white-space: wrap; 
-    
     text-overflow: ellipsis;
+    overflow: hidden;
+}
 
+
+
+.postits h2{
+    font-size: 100%;
+    font-weight:bolder;
     
+}
+.Afazer{
+    background-color:var(--color-postit-amarelo);
+}
+.EmRealizacao{
+    background-color:var(--color-postit-vermelho);
+    width: 90%;
+    font-size:none;
+    height: 90%;
+
+}
+.EmRealizacao:hover{
+    position: relative;
+    width: 90%;
+    
+    
+}
+.Concluido{
+    background-color:var(--color-postit-verde);
+}
+
+.postits p{
+    font-size: 100%;
+    margin: 5px;
 }
 #botaoPostits{
     width: 150px;
@@ -249,23 +274,22 @@ header{
     background-color: rgba(0, 0, 0, 0);
     color: #F4F3F3;
 }
-.postits h2
-, .postits p{
-    font-size: 100%;
-    margin: 5px;
-}
+
 #drop1{
-    margin:2px;
+    align-self: center;
+    border-radius: 50%;
 }
 #drop1 div{
-   
+    border-radius: 50%;
 }
  #drop1 > div > button{
     width: 20px;
     height: 20px;
     margin: 0px;
     padding: 0px;   
-    border-color: #00000000;   
+    border-color: #00000000; 
+    border-radius: 50%;
+    box-shadow: var(--shadow-box),var(--shadow-box)inset;
 }
 #drop1 > div > button::after{
     margin: 0px;
@@ -283,6 +307,12 @@ header{
 }
 #drop{
     margin: 0px;
+    overflow: hidden;
+}
+.postits >#drop{
+    
+    overflow: none;
+
 }
 
 
