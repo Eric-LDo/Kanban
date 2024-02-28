@@ -19,9 +19,6 @@ body.addEventListener('keydown'  , function (e){
     }
 });
 
-
-
-
 function menuLateral(){
     if (!contenMenu){
         const sec = document.createElement('section')
@@ -29,15 +26,18 @@ function menuLateral(){
         ul.setAttribute('type', 'none')
         sec.setAttribute('id', 'config')
         let link = ['Configurações', 'Temas', 'Perfil', 'Sair']
-        link.forEach(e => {
+        for(let i = 0;i < link.length;i++ ){
             let li = document.createElement('li')
             li.setAttribute('class','itemMenu itemConfig')
             let a = document.createElement('a')
-            a.textContent= e
+            a.textContent= link[i]
             a.href = '#'
+            a.id=`config${i}`
             li.appendChild(a)
             ul.appendChild(li)           
-        });
+        };
+        
+        
         sec.appendChild(ul)        
         main.appendChild(sec)
         contenMenu = true
@@ -49,11 +49,30 @@ function menuLateral(){
     } 
     
 }   
-novaTarefa.addEventListener('click', newTarefa );
+const configura = document.querySelectorAll('.itemConfig')
+configura.addEventListener('click', criacaoDeLi(configura))
+    
+ 
+function criacaoDeLi(elemento){
+    let ul = document.createElement('ul')
+    ul.setAttribute('type', 'circle')
+    let itensConf =  ['Mudar de conta']
+    for(let i = 0; i < itensConf.length;i++ ){
+        let li = document.createElement('li')
+        li.setAttribute('class','itemMenu itemConfigConf')
+        let a = document.createElement('a')
+        a.textContent= itensConf[i]
+        a.href = '#'
+        li.appendChild(a)
+        ul.appendChild(e)           
+    };
+    elemento.before(ul)
+}
+novaTarefa.addEventListener('click', () =>{
+    divJanelaTarefa()
+});
 
-function newTarefa(){
-    divJanelaTarefa()  
-} 
+
 function divJanelaTarefa(tarefa){
     
     const divJanelaTarefa = document.createElement("div");
