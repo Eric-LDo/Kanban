@@ -11,6 +11,7 @@ const tarefasAF= []
 const tarefasC = []
 const tarefasEA =[]
 let contenMenu = false
+let boolAbrirConfig = false
 
 btn.addEventListener( 'click', menuLateral)
 body.addEventListener('keydown'  , function (e){
@@ -25,7 +26,7 @@ function menuLateral(){
         let ul = document.createElement('ul')
         ul.setAttribute('type', 'none')
         sec.setAttribute('id', 'config')
-        let link = ['Configurações', 'Temas', 'Perfil', 'Sair']
+        let link = ['Temas', 'Perfil', 'Sair']
         for(let i = 0;i < link.length;i++ ){
             let li = document.createElement('li')
             li.setAttribute('class','itemMenu itemConfig')
@@ -47,27 +48,48 @@ function menuLateral(){
         main.removeChild(sec2)
         contenMenu = false
     } 
-    
-}   
-const configura = document.querySelectorAll('.itemConfig')
-configura.addEventListener('click', criacaoDeLi(configura))
-    
- 
-function criacaoDeLi(elemento){
-    let ul = document.createElement('ul')
-    ul.setAttribute('type', 'circle')
-    let itensConf =  ['Mudar de conta']
-    for(let i = 0; i < itensConf.length;i++ ){
-        let li = document.createElement('li')
-        li.setAttribute('class','itemMenu itemConfigConf')
-        let a = document.createElement('a')
-        a.textContent= itensConf[i]
-        a.href = '#'
-        li.appendChild(a)
-        ul.appendChild(e)           
-    };
-    elemento.before(ul)
+    const configura  = document.querySelectorAll('.itemConfig')
+    configura[0].addEventListener('click', ()=>{
+        abrirConfig(configura[0],['Claro', 'Escuro'],boolAbrirConfig)
+    })
+    boolAbrirConfig = false
 }
+
+function abrirConfig(e, arr,bool){
+    if(!bool){
+        let ul = document.createElement('ul')
+        ul.setAttribute('type','none')
+        ul.setAttribute( 'id','opcoesTemas')
+        
+        for(let i=0; i < arr.length; i++){
+            const temas = document.createElement('li')
+            const a =document.createElement('a')
+            temas.setAttribute('class', 'itemMenu')
+            temas.setAttribute('id',`temas${i}`)
+            temas.append(a)
+            temas.style.cursor='pointer'
+            a.textContent = arr[i]
+            ul.append(temas)
+        }
+        e.after(ul)
+        if(e === document.querySelectorAll('.itemConfig')[0]){
+            boolAbrirConfig = true
+        }
+    } else if(bool){
+        const ul = document.querySelector( '#opcoesTemas' )
+        ul.remove()
+        if(e === document.querySelectorAll('.itemConfig')[0]){
+            boolAbrirConfig = false
+        }
+    }
+}
+    
+    
+    
+
+  
+
+
 novaTarefa.addEventListener('click', () =>{
     divJanelaTarefa()
 });
@@ -178,7 +200,7 @@ function divJanelaTarefa(tarefa){
         divJanelaTarefa.remove();
     });
 
-    ////////////////////////////////////////////////////////////
+    
     //movimentações
     if(tarefa !== undefined){
         inputNomeTarefa.value = tarefa._titulo;
