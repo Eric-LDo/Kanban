@@ -12,6 +12,7 @@ const tarefasC = []
 const tarefasEA =[]
 let contenMenu = false
 let boolAbrirConfig = false
+let claro = true
 
 btn.addEventListener( 'click', menuLateral)
 body.addEventListener('keydown'  , function (e){
@@ -26,7 +27,7 @@ function menuLateral(){
         let ul = document.createElement('ul')
         ul.setAttribute('type', 'none')
         sec.setAttribute('id', 'config')
-        let link = ['Temas', 'Perfil', 'Sair']
+        let link = ['Temas', 'Sair']
         for(let i = 0;i < link.length;i++ ){
             let li = document.createElement('li')
             li.setAttribute('class','itemMenu itemConfig')
@@ -65,7 +66,42 @@ function abrirConfig(e, arr,bool){
             const temas = document.createElement('li')
             const a =document.createElement('a')
             temas.setAttribute('class', 'itemMenu')
-            temas.setAttribute('id',`temas${i}`)
+            if(e === document.querySelectorAll('.itemConfig')[0]){
+                temas.setAttribute('id',`temas${i}`)
+                
+            }
+            if(e === document.querySelectorAll('.itemConfig')[0] && i == 0){
+                a.addEventListener('click',(e) => {
+                if (claro){
+                let header  = document.getElementsByTagName('header')[0]
+                header.style.backgroundColor='#049df5'
+                main.style.backgroundColor='white'
+                body.style.backgroundColor='white'
+                let sections = main.querySelectorAll('.mainSec')
+                for(let i = 0; i < sections.length; i++){
+                    sections[i].style.backgroundColor = '#F4F3F3'
+                    sections[i].style.color="black"
+                }
+                btn.style.backgroundColor = '#9ce8f4';
+                
+                }
+            })}
+            if(e === document.querySelectorAll('.itemConfig')[0] && i == 1){
+                a.addEventListener('click',(e) => {
+                if (claro){
+                let header  = document.getElementsByTagName('header')[0]
+                header.style.backgroundColor='rgb(15, 0, 83)'
+                main.style.backgroundColor='rgba(2, 2, 2, 1)'
+                body.style.backgroundColor='rgba(2, 2, 2, 1)'
+                let sections = main.querySelectorAll('.mainSec')
+                for(let i = 0; i < sections.length; i++){
+                    sections[i].style.backgroundColor = 'rgba(50,50,50,.9)'
+                    sections[i].style.color="white"
+                }
+                btn.style.backgroundColor = 'rgb(0, 64, 85)';
+                
+                }
+            })}
             temas.append(a)
             temas.style.cursor='pointer'
             a.textContent = arr[i]
@@ -82,14 +118,8 @@ function abrirConfig(e, arr,bool){
             boolAbrirConfig = false
         }
     }
+
 }
-    
-    
-    
-
-  
-
-
 novaTarefa.addEventListener('click', () =>{
     divJanelaTarefa()
 });
@@ -256,11 +286,14 @@ function criarPostit(caixa, vetorTarefa, opcoesVetor,id ){
         postit.appendChild(descricao)     
         caixa.appendChild(postit)
         
+        
         mineMenu(opcoesVetor, postit, id)//Criar o menu da tarefa
         //Adicionando os eventos nos itens do menu
         for (var j = 0; j < opcoesVetor.length; j++){
             editar[j] =  postit.querySelector(`#${id}${j}`);
         }
+        
+        
         if(vetorTarefa == tarefasAF){
             //editar afazer
             editar[0].addEventListener('click', ()=>{
@@ -330,7 +363,11 @@ function criarPostit(caixa, vetorTarefa, opcoesVetor,id ){
                 vetorTarefa.splice(i, 1)
             });
         }
-
+        if(caixa == document.querySelector('#emAndamento .mainSec2')){
+            for(let y = 0;y < vetorTarefa[i]._etapas.length; y++){
+                postit.appendChild(vetorTarefa[i]._etapas[y])
+            }
+        }
     }
 }
 
